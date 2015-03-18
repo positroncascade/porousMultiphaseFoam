@@ -4,7 +4,7 @@
 
 volTensorField dfw (
 		    "dfw",
-		    (dkrbdS*kra - dkradS*krb) /(Mmu*Foam::pow(kra,2)+2*kra*krb+1/Mmu*Foam::pow(krb,2))*tensor::I
+		    (dkrbdS*kra - dkradS*krb) /(Mmu*Foam::pow(kra,2)+2*kra*krb+1/Mmu*Foam::pow(krb,2))*identity_tensor
 			);
 
 dimensionedScalar smallRate("smallRate",dimVolume/dimTime, SMALL);
@@ -21,7 +21,7 @@ volTensorField CFLCoats((runTime.deltaT()/eps/cellVolume)*dfw*fvc::surfaceSum(ma
 volScalarField dpc(myCapModel->dpcdS());
 if(activateCapillarity)
   {
-    CFLCoats += (runTime.deltaT()/eps/cellVolume)*2*mag(dpc)*fvc::surfaceSum(Kf*mesh.magSf()/mag(mesh.delta()))*(kra*krb/(mub*kra+mua*krb));  
+    CFLCoats += (runTime.deltaT()/eps/cellVolume)*2*mag(dpc)*fvc::surfaceSum(Kf*mesh.magSf()/mag(delta))*(kra*krb/(mub*kra+mua*krb));  
   }
 
 

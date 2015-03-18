@@ -17,19 +17,19 @@ FoamFile
 
 application     impesFoam;
 
-startFrom       latestTime;
+startFrom       startTime;
 
 startTime       0.0;
 
 stopAt          endTime;
 
-endTime         2e6;
+endTime         2000000;
 
-deltaT          1e-5;
+deltaT          1e-05;
 
 writeControl    adjustableRunTime;
 
-writeInterval   5e4;
+writeInterval   1000;
 
 purgeWrite      0;
 
@@ -43,15 +43,15 @@ timeFormat      general;
 
 timePrecision   6;
 
+adjustTimeStep  no;
+
 runTimeModifiable yes;
 
 CFL            yes; // yes for CFL Coats - no for classic Courant No
 
 maxCo		0.75;
-//maxCo		  0.10;
 
-dSmax           1;
-//dSmax           0.01;
+dSmax           1.;
 
 maxDeltaT	100;
 

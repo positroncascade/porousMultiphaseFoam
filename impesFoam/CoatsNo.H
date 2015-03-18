@@ -1,4 +1,5 @@
 // --- Coats (2003) IMPES STABILITY: CFL LIMIT
+
 // - inertial part
 volScalarField dfw (
 		    "dfw",
@@ -15,7 +16,7 @@ volScalarField CFLCoats((runTime.deltaT()/eps/cellVolume)*dfw*fvc::surfaceSum(ma
 volScalarField dpc(myCapModel->dpcdS());
 if(activateCapillarity)
   {
-    CFLCoats += (runTime.deltaT()/eps/cellVolume)*2*mag(dpc)*fvc::surfaceSum(Kf*mesh.magSf()/mag(mesh.delta()))*(kra*krb/(mub*kra+mua*krb));  
+    CFLCoats += (runTime.deltaT()/eps/cellVolume)*2*mag(dpc)*fvc::surfaceSum(Kf*mesh.magSf()/mag(delta))*(kra*krb/(mub*kra+mua*krb));
   }
 
 if (CFL)

@@ -43,12 +43,13 @@ timeFormat      general;
 
 timePrecision   6;
 
+adjustTimeStep  yes;
+
 runTimeModifiable yes;
 
 CFL            yes; // yes for CFL Coats - no for classic Courant No
 
 maxCo           0.75;
-//maxCo           0.10;
 
 dSmax           1;
 //dSmax           0.01;// needed with capillary effect

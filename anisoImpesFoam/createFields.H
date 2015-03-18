@@ -174,3 +174,42 @@ volScalarField cellVolume
     dimensionedScalar("unite",dimVolume,1.0)//pour la division dans les termes sources
 );
 cellVolume.internalField() = mesh.V();
+
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////////// MESH.delta()  //////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+// - compute fvMesh.delta() explicitly to be compatible with foam-extend / older OpenFOAM versions 
+surfaceVectorField delta
+(
+    IOobject
+    (
+        "delta",
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE,
+        false
+    ),
+    mesh,
+    dimLength
+);
+const volVectorField& C = mesh.C();
+const unallocLabelList& owner = mesh.owner();
+const unallocLabelList& neighbour = mesh.neighbour();
+ 
+forAll(owner, facei)
+{
+    delta[facei] = C[neighbour[facei]] - C[owner[facei]];
+}
+forAll(delta.boundaryField(), patchi)
+{
+    delta.boundaryField()[patchi] = mesh.boundary()[patchi].delta();
+}
+
+dimensionedTensor identity_tensor
+(
+    "identity_tensor",
+    dimensionSet(0, 0, 0, 0, 0, 0, 0),
+    tensor(1,0,0,0,1,0,0,0,1)
+);
+

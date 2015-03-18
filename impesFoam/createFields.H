@@ -177,3 +177,36 @@ volScalarField cellVolume
 );
 cellVolume.internalField() = mesh.V();
 
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////////// MESH.delta()  //////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+// - compute fvMesh.delta() explicitly to be compatible with foam-extend / older OpenFOAM versions 
+surfaceVectorField delta
+(
+    IOobject
+    (
+        "delta",
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE,
+        false
+    ),
+    mesh,
+    dimLength
+);
+const volVectorField& C = mesh.C();
+// const labelUList& owner = mesh.owner();
+// const labelUList& neighbour = mesh.neighbour();
+ const unallocLabelList& owner = mesh.owner();
+const unallocLabelList& neighbour = mesh.neighbour();
+
+
+forAll(owner, facei)
+{
+    delta[facei] = C[neighbour[facei]] - C[owner[facei]];
+}
+forAll(delta.boundaryField(), patchi)
+{
+    delta.boundaryField()[patchi] = mesh.boundary()[patchi].delta();
+}

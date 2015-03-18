@@ -9,3 +9,5 @@ runApplication blockMesh
 cp constant/g.case2 constant/g
 runApplication impesFoam
 runApplication sample
+mkdir postProcessing
+mv sets postProcessing

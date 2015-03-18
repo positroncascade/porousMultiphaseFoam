@@ -11,3 +11,5 @@ cp constant/transportProperties.case1 constant/transportProperties
 runApplication blockMesh
 runApplication impesFoam 
 runApplication sample
+mkdir postProcessing
+mv sets postProcessing
