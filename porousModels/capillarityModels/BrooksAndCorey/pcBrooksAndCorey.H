@@ -56,10 +56,14 @@ namespace Foam
     {
       // pcBrooks and Corey coefficients
       dictionary pcBrooksAndCoreyCoeffs_;
+        
       dimensionedScalar Sminpc_;    
       dimensionedScalar Smaxpc_;    
       dimensionedScalar pc0_;
       scalar alpha_;
+
+      // effective saturation of phase b 
+      volScalarField Se_;
 
       // capillary pressure and derivative
       volScalarField pc_;
@@ -101,15 +105,31 @@ namespace Foam
       //- Correct the laminar capillarity
       void correct()
       {
-          volScalarField Se_ = (Sb_-Sminpc_)/(Smaxpc_ - Sminpc_);
-          pc_ = pc0_ * pow(Se_,-alpha_);
-          dpcdS_= -alpha_*pc0_*(pow(Se_,-alpha_-1))/(Smaxpc_-Sminpc_);
+        Se_ == (Sb_-Sminpc_)/(Smaxpc_ - Sminpc_);
+        pc_ = pc0_ * pow(Se_,-alpha_);
+        dpcdS_= -alpha_*pc0_*(pow(Se_,-alpha_-1))/(Smaxpc_-Sminpc_);
       }
+
+      //- Compute Moisture from head pressure (Richards' model)
+      volScalarField correctAndSb(volScalarField h) 
+      {
+        FatalErrorIn("volScalarField MoistureFromHeadPressure(volScalarField h) const")
+                       << "Not implemented in pcBrooksAndCorey.H " << abort(FatalError);
+        return Se_;
+      };
+
+      //- Capillary capacity (Richards' model)
+      tmp<volScalarField> Ch() const
+      {
+        FatalErrorIn("tmp<volScalarField> Ch() const")
+                    << "Not implemented in pcBrooksAndCorey.H " << abort(FatalError);
+        return Se_;
+      };
 
       //- Read transportProperties dictionary
       bool read(const dictionary& capillarityProperties);
-    };
 
+    };
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

@@ -54,10 +54,22 @@ Foam::capillarityModels::pcLinear::pcLinear
     :
   capillarityModel(name, capillarityProperties,Sb),
   pcLinearCoeffs_(capillarityProperties.subDict(typeName + "Coeffs")),
-  Sminpc_(pcLinearCoeffs_.lookup("Sminpc")),
-  Smaxpc_(pcLinearCoeffs_.lookup("Smaxpc")),
+  Sminpc_(pcLinearCoeffs_.lookupOrDefault(Sb_.name()+"minpc",dimensionedScalar(capillarityProperties.lookup(Sb_.name()+"min")))),
+  Smaxpc_(pcLinearCoeffs_.lookupOrDefault(Sb_.name()+"maxpc",dimensionedScalar(capillarityProperties.lookup(Sb_.name()+"max")))),
   pc0_(pcLinearCoeffs_.lookup("pc0")),
   pcMax_(pcLinearCoeffs_.lookup("pcMax")),
+  Se_
+  (
+   IOobject
+   (
+    name,
+    Sb_.time().timeName(),
+    Sb_.db(),
+    IOobject::NO_READ,
+    IOobject::NO_WRITE
+    ),       
+   Sb_
+   ),
   pc_
   (
    IOobject
@@ -88,7 +100,6 @@ Foam::capillarityModels::pcLinear::pcLinear
   correct();
 }
 
-
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
 bool Foam::capillarityModels::pcLinear::read
@@ -99,12 +110,11 @@ bool Foam::capillarityModels::pcLinear::read
   capillarityProperties_ = capillarityProperties;
 
   pcLinearCoeffs_ = capillarityProperties.subDict(typeName + "Coeffs");
-  pcLinearCoeffs_.lookup("Sminpc") >> Sminpc_;
-  pcLinearCoeffs_.lookup("Smaxpc") >> Smaxpc_;
+  pcLinearCoeffs_.lookup(Sb_.name()+"minpc") >> Sminpc_;
+  pcLinearCoeffs_.lookup(Sb_.name()+"maxpc") >> Smaxpc_;
   pcLinearCoeffs_.lookup("pc0") >> pc0_;
   pcLinearCoeffs_.lookup("pcMax") >> pcMax_;
   return true;
 }
-
 
 // ************************************************************************* //

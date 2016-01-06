@@ -1,18 +1,22 @@
-**************************************************************************
-****************** PorousMultiphaseFoam for OpenFOAM *********************
-**************************************************************************
-
+***********************************************************************
+***************** porousMultiphaseFoam for OpenFOAM *******************
+***********************************************************************
 
       "A open-source toolbox for multiphase flow in porous media"
       P. Horgue, C. Soulaine, J. Franc, R. Guibert and G. Debenest.
-      Computer Physics Communications, In Press, Accepted Manuscript
+      Computer Physics Communications, 187 (2015) 217-226
+
+      "An extension of the open-source porousMultiphaseFoam toolbox 
+       dedicated to groundwater flows solving the Richards' equation"
+      P. Horgue, J. Franc, R. Guibert and G. Debenest.
+      HAL Archives Ouvertes, (2015) hal-01206922
 
 **************************************************************************
 
 * General Informations : 
 
 
-- This toolbox is compatible with OpenFOAM 2.2 and later.
+- This toolbox is compatible with OpenFOAM 2.2 and later (and foam-extend 3.0 and later).
 
 - This toolbox needs only a standard OpenFOAM installation (see www.openfoam.org)
 
@@ -77,6 +81,15 @@ anisoImpesFoam
 IMPES method solving two-phase flow in porous media with several multiphase 
 models available in the provided libraries. Permeability field is anisotropic
 and can be heterogeneous (K is a volTensorField).
+
+****************************************************************************
+
+groundwaterFoam
+
+Picard's method used to solve two-phase flow in porous media neglecting the 
+pressure gradient in the non-wetting phase (Richards' equation). Several 
+multiphase models from the literature are available in the provided libraries.
+Permeability field is isotropic and can be heterogeneous (K is a volScalarField).
 
 ****************************************************************************
 

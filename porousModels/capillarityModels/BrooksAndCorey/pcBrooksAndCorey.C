@@ -25,7 +25,6 @@ License
 
 #include "pcBrooksAndCorey.H"
 #include "addToRunTimeSelectionTable.H"
-//#include "surfaceFields.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -55,10 +54,22 @@ Foam::capillarityModels::pcBrooksAndCorey::pcBrooksAndCorey
     :
   capillarityModel(name, capillarityProperties,Sb),	
   pcBrooksAndCoreyCoeffs_(capillarityProperties.subDict(typeName + "Coeffs")),
-  Sminpc_(pcBrooksAndCoreyCoeffs_.lookup("Sminpc")),
-  Smaxpc_(pcBrooksAndCoreyCoeffs_.lookup("Smaxpc")),
+  Sminpc_(pcBrooksAndCoreyCoeffs_.lookupOrDefault(Sb_.name()+"minpc",dimensionedScalar(capillarityProperties.lookup(Sb_.name()+"min")))),
+  Smaxpc_(pcBrooksAndCoreyCoeffs_.lookupOrDefault(Sb_.name()+"maxpc",dimensionedScalar(capillarityProperties.lookup(Sb_.name()+"max")))),
   pc0_(pcBrooksAndCoreyCoeffs_.lookup("pc0")),
   alpha_(pcBrooksAndCoreyCoeffs_.lookupOrDefault<scalar>("alpha",0)),
+  Se_
+  (
+   IOobject
+   (
+    name,
+    Sb_.time().timeName(),
+    Sb_.db(),
+    IOobject::NO_READ,
+    IOobject::NO_WRITE
+    ),       
+   Sb_
+   ),
   pc_
   (
    IOobject
@@ -89,7 +100,6 @@ Foam::capillarityModels::pcBrooksAndCorey::pcBrooksAndCorey
   correct();
 }
 
-
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
 bool Foam::capillarityModels::pcBrooksAndCorey::read
@@ -100,13 +110,12 @@ bool Foam::capillarityModels::pcBrooksAndCorey::read
   capillarityProperties_ = capillarityProperties;
 
   pcBrooksAndCoreyCoeffs_ = capillarityProperties.subDict(typeName + "Coeffs");
-  pcBrooksAndCoreyCoeffs_.lookup("Sminpc") >> Sminpc_;
-  pcBrooksAndCoreyCoeffs_.lookup("Smaxpc") >> Smaxpc_;
+  pcBrooksAndCoreyCoeffs_.lookup(Sb_.name()+"minpc") >> Sminpc_;
+  pcBrooksAndCoreyCoeffs_.lookup(Sb_.name()+"maxpc") >> Smaxpc_;
   pcBrooksAndCoreyCoeffs_.lookup("pc0") >> pc0_;
   alpha_ = pcBrooksAndCoreyCoeffs_.lookupOrDefault<scalar>("alpha",0);    
 
   return true;
 }
-
 
 // ************************************************************************* //
