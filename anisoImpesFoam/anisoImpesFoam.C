@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
     #include "createFields.H"
     #include "createSbFields.H"
     #include "createWellbores.H"
-    #include "initContinuityErrs.H"
     #include "readTimeControls.H"
     #include "CourantNo.H"
     #include "setInitialDeltaT.H"
@@ -62,13 +61,15 @@ int main(int argc, char *argv[])
 
     Info<< "\nStarting time loop\n" << endl;
 
-    while (runTime.loop())
-    {
-        Info<< "Time = " << runTime.timeName() << nl << endl;
-
+    while (runTime.run())
+    { 
         #include "CoatsNo.H"
         #include "CourantNo.H"
         #include "setDeltaT.H"
+
+        runTime++;
+
+        Info<< "Time = " << runTime.timeName() << nl << endl;
 
          //- Solve saturation equation (explicit)             
         #include "SEqn.H"
