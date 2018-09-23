@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
   | =========                 |                                                 |
   | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-  |  \\    /   O peration     | Version:  4.0                                   |
+  |  \\    /   O peration     | Version:  4.1                                   |
   |   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
   |    \\/     M anipulation  |                                                 |
   \*---------------------------------------------------------------------------*/
@@ -39,10 +39,14 @@ capillarityModel	VanGenuchten;
 
 VanGenuchtenCoeffs
 {
-    Sbminpc Sbminpc [0 0 0 0 0 0 0] 0;
-    Sbmaxpc Sbmaxpc [0 0 0 0 0 0 0] 1;
     pc0 pc0 [1 -1 -2 0 0 0 0] 5;
     m	0.5;
+}
+
+wellboreProperties
+{
+    qInjection	qInjection [0 3 -1 0 0 0 0]	0e-3;
+    qExtraction	qExtraction [0 3 -1 0 0 0 0]	0e-3;
 }
 
 // ************************************************************************* //

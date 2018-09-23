@@ -4,8 +4,25 @@
 
 * General Informations : 
 
+- The toolbox compatibility list:
 
-- This toolbox is compatible with OpenFOAM 4.0 and later.
+  - branch "master": 
+    - OpenFOAM 6	v1809
+    - OpenFOAM 5.0	v1809
+    - OpenFOAM 4.0	v1.4.1
+    - OpenFOAM 3.0	v1.2
+
+  - branch "foam-extend":
+    - foam-extend 4.0	v1809
+
+  - branch "esi-version":
+    - OpenFOAM v1806	v1809
+    - OpenFOAM v1712    v1805
+
+  - version no supported:
+    - OpenFOAM 2.4 and older
+    - foam-extend 3.2 and older
+    - OpenFOAM v1706 and older
 
 - This toolbox needs only a standard OpenFOAM installation (see www.openfoam.org)
 
@@ -17,7 +34,7 @@
 
 
 - First, source the OpenFOAM configuration file, i.e. (example for ubuntu version) : 
-   source /opt/openfoam4x/etc/bashrc
+   source /opt/openfoam5x/etc/bashrc
 
 - then in the "porousMultiphaseFoam" directory, run :
 
@@ -34,7 +51,9 @@
 - Each tutorial directory contains "run" and "clean" files to test installation
   and validate the solver.
 
-- To remove temporary files AND dynamic librairies AND executables, run :
+- A python script runTutorials.py can be used to test all components.
+
+- To remove compilation and temporary files, run :
 
 	./Allwclean
 

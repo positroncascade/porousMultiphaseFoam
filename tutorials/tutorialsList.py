@@ -10,4 +10,8 @@ tutorials = [{'solver' : "impesFoam", 'case' : "Buckley-Leverett/BrooksAndCorey"
              {'solver' : "anisoImpesFoam", 'case' : "injectionAniso_case2"}, \
              {'solver' : "groundwaterFoam", 'case' : "1Dinfiltration"}, \
              {'solver' : "groundwaterFoam", 'case' : "1Dinfiltration_Ufixed"}, \
-             {'solver' : "groundwaterFoam", 'case' : "realCase"}]
+             {'solver' : "groundwaterFoam", 'case' : "realCase"}, \
+             {'solver' : "darcyFoam", 'case' : "SPE10"}, \
+             {'solver' : "porousScalarTransportFoam", 'case' : "alphaDispersion"}, \
+             {'solver' : "groundwater2DFoam", 'case' : "1Dwave_hFixed"}, \
+             {'solver' : "groundwater2DFoam", 'case' : "1Dwave_UFixed"}]
